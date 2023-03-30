@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class SignTask : MonoBehaviour, TaskGame
+public class SignTask : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] Animator anim;
     private void OnEnable()
@@ -34,11 +34,21 @@ public class SignTask : MonoBehaviour, TaskGame
 
     public void Action()
     {
+        if (Player.INS.toolActual == null) return;
+        if (Player.INS.toolActual.toolType != ToolsType.Pen) { Player.INS.toolActual.Restart(Player.INS.toolActual.gameObject); return; }
+        Pen pen = (Pen)Player.INS.toolActual;
+        pen.Action();
+        LeanTween.delayedCall(2, () => { EndAnimTask(); });
         
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        
+        Action();
+    }
+
+    public void EndAnimTask()
+    {
+        LeanTween.moveLocalX(transform.parent.gameObject, -1500, 1).setEaseOutBack().setOnComplete(_ => TaskManager.INS.NextTask());
     }
 }

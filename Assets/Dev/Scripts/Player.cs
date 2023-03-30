@@ -15,6 +15,10 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (toolActual != null) toolActual.transform.position = Input.mousePosition;
+        if (toolActual != null)
+        {
+            toolActual.transform.position = Input.mousePosition;
+        }
+
     }
 }

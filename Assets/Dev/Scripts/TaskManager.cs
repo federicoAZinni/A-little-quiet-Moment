@@ -20,7 +20,7 @@ public class TaskManager : MonoBehaviour
 
     public void NextTask()
     {
-        if (indexTask > tasks.Length) indexTask = 0;
+        if (indexTask >= tasks.Length) indexTask = 0;
 
         for (int i = 0; i < tasks.Length; i++)
         {

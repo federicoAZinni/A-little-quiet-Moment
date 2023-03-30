@@ -6,24 +6,20 @@ using UnityEngine.UI;
 
 public class Seal : Tools
 {
-    bool taken;
-    [SerializeField] Image imgSeal;
-    [SerializeField] Vector3 initPos;
 
     private void Awake()
     {
         toolType = ToolsType.Seal;
+        initPos = transform.localPosition;
     }
     public override void OnPointerDown(PointerEventData eventData)
     {
-        if (!taken) { Player.INS.toolActual = this; taken = true; imgSeal.raycastTarget = false;  }
+        if (!taken) { Player.INS.toolActual = this; taken = true; img.raycastTarget = false;  }
     }
 
-    public override void Restart()
+    public override void Action()
     {
-        taken = true; 
-        imgSeal.raycastTarget = true;
-        LeanTween.moveLocal(gameObject, initPos, 0.3f).setEaseOutSine();
-        Player.INS.toolActual = null;
+        LeanTween.moveLocalY(gameObject, 0, 0.2f);
+        LeanTween.delayedCall(0.3f, _ => base.Restart(gameObject));
     }
 }
