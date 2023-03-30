@@ -18,7 +18,7 @@ public class DocumentTask : MonoBehaviour,IPointerDownHandler
     
     public void EndAnimTask()
     {
-        LeanTween.moveLocalX(gameObject, -1501, 1).setEaseOutBack();
+        LeanTween.moveLocalX(gameObject, -1501, 1).setEaseOutBack().setOnComplete(_=> TaskManager.INS.NextTask());
     }
 
     public void Action()
