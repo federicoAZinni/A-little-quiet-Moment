@@ -11,10 +11,6 @@ public class Pen : Tools
     {
         initPos = transform.localPosition;
     }
-    private void Start()
-    {
-        
-    }
     public override void OnPointerDown(PointerEventData eventData)
     {
         if (!taken) { Player.INS.toolActual = this; taken = true; img.raycastTarget = false; }

@@ -20,6 +20,7 @@ public class Seal : Tools
     public override void Action()
     {
         LeanTween.moveLocalY(gameObject, 0, 0.2f);
+        Player.INS.toolActual = null;
         LeanTween.delayedCall(0.3f, _ => base.Restart(gameObject));
     }
 }

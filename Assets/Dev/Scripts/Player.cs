@@ -7,7 +7,7 @@ public class Player : MonoBehaviour
     public static Player INS;
 
     public Tools toolActual;
-
+    public GameObject chicaImg;
     private void Awake()
     {
         INS = this;   

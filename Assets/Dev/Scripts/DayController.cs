@@ -8,6 +8,6 @@ public class DayController : MonoBehaviour
 
     private void Start()
     {
-        LeanTween.rotateAround(sun, -Vector3.right, 360, 10);
+        LeanTween.rotateAround(sun, -Vector3.right, 360, 60);
     }
 }

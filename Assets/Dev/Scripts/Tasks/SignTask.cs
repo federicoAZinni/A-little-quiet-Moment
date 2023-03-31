@@ -10,7 +10,7 @@ public class SignTask : MonoBehaviour, IPointerDownHandler
     {
         LeanTween.moveLocalX(transform.parent.gameObject, 0, 1).setEaseOutBack();
         LeanTween.delayedCall(1, () => {
-            LeanTween.moveLocalY(transform.parent.gameObject, 130, 1);
+            LeanTween.moveLocalY(transform.parent.gameObject, 100, 1);
             LeanTween.scale(transform.parent.gameObject, Vector2.one * 2.5f, 1).setEaseOutBack();
         });
         LeanTween.delayedCall(2.5f, () => {
