@@ -7,7 +7,8 @@ public class DocumentTask : MonoBehaviour,IPointerDownHandler
 {
     public GameObject approved;
 
-    void Start()
+   
+    private void OnEnable()
     {
         StartAnimTask();
     }
@@ -18,7 +19,7 @@ public class DocumentTask : MonoBehaviour,IPointerDownHandler
     
     public void EndAnimTask()
     {
-        LeanTween.moveLocalX(gameObject, -1500, 1).setEaseOutBack().setOnComplete(_ => { TaskManager.INS.NextTask(); approved.SetActive(false); });
+        LeanTween.moveLocalX(gameObject, -1500, 1).setEaseOutBack().setOnComplete(_ => {approved.SetActive(false); Destroy(gameObject); });
     }
 
     public void Action()
@@ -28,7 +29,7 @@ public class DocumentTask : MonoBehaviour,IPointerDownHandler
         Seal seal = (Seal)Player.INS.toolActual;
         seal.Action();
         LeanTween.delayedCall(0.5f, () => { approved.SetActive(true); });
-        LeanTween.delayedCall(1, () => { EndAnimTask(); });
+        LeanTween.delayedCall(1, () => { EndAnimTask(); TaskManager.INS.TaskCompleted(); });
     }
 
     public void OnPointerDown(PointerEventData eventData)

@@ -8,9 +8,16 @@ public class Player : MonoBehaviour
 
     public Tools toolActual;
     public GameObject chicaImg;
+    public AudioSource audioSources;
+    public AudioClip[] suspiros;
     private void Awake()
     {
-        INS = this;   
+        INS = this; 
+    }
+
+    public void RandomSuspiro()
+    {
+        audioSources.PlayOneShot(suspiros[Random.Range(0,suspiros.Length)]);
     }
 
     private void Update()

@@ -2,10 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class SignTask : MonoBehaviour, IPointerDownHandler
 {
     [SerializeField] Animator anim;
+    [SerializeField] Animator animSign;
+    Vector3 initPos;
+     Vector3 rotPos;
+    [SerializeField] Image sign;
+    [SerializeField] Sprite firstImgSign;
+    private void Start()
+    {
+        initPos = transform.localPosition;
+        rotPos = transform.localEulerAngles;
+    }
+
     private void OnEnable()
     {
         LeanTween.moveLocalX(transform.parent.gameObject, 0, 1).setEaseOutBack();
@@ -38,6 +50,9 @@ public class SignTask : MonoBehaviour, IPointerDownHandler
         if (Player.INS.toolActual.toolType != ToolsType.Pen) { Player.INS.toolActual.Restart(Player.INS.toolActual.gameObject); return; }
         Pen pen = (Pen)Player.INS.toolActual;
         pen.Action();
+        animSign.gameObject.SetActive(true);
+        animSign.Play("sign");
+        animSign.transform.SetAsLastSibling();
         LeanTween.delayedCall(2, () => { EndAnimTask(); });
         
     }
@@ -49,6 +64,16 @@ public class SignTask : MonoBehaviour, IPointerDownHandler
 
     public void EndAnimTask()
     {
-        LeanTween.moveLocalX(transform.parent.gameObject, -1500, 1).setEaseOutBack().setOnComplete(_ => TaskManager.INS.NextTask());
+        LeanTween.moveLocalX(transform.parent.gameObject, -1500, 1).setEaseOutBack().setOnComplete(()=> {
+            transform.localPosition = initPos;
+            transform.localEulerAngles = rotPos;
+            transform.localScale = Vector3.one;
+            sign.transform.localScale = Vector3.one;
+            sign.sprite = firstImgSign;
+            transform.SetAsFirstSibling();
+            Destroy(transform.parent.gameObject);
+            TaskManager.INS.TaskCompleted();
+        });
+        
     }
 }

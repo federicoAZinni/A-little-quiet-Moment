@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 public class Pen : Tools
 {
     [SerializeField] Animator anim;
+    [SerializeField] AudioSource audioSource;
     private void Awake()
     {
         initPos = transform.localPosition;
@@ -24,7 +25,9 @@ public class Pen : Tools
     {
         anim.enabled = true;
         anim.Play("PenAnim");
+        audioSource.PlayOneShot(audioSource.clip);
         LeanTween.delayedCall(1.2f, () => {
+            anim.Rebind();
             anim.enabled = false;
             base.Restart(gameObject); 
         });

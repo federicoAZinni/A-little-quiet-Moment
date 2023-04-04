@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class Seal : Tools
 {
-
+    [SerializeField] AnimationCurve animcurve;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip clip;
     private void Awake()
     {
         toolType = ToolsType.Seal;
@@ -19,8 +21,8 @@ public class Seal : Tools
 
     public override void Action()
     {
-        LeanTween.moveLocalY(gameObject, 0, 0.2f);
+        LeanTween.moveLocal(gameObject, new Vector2(40,-80), 0.5f).setEase(animcurve).setOnComplete(()=> { audioSource.PlayOneShot(clip); });
         Player.INS.toolActual = null;
-        LeanTween.delayedCall(0.3f, _ => base.Restart(gameObject));
+        LeanTween.delayedCall(0.5f, _ => base.Restart(gameObject));
     }
 }

@@ -15,11 +15,14 @@ public class BoxTask : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
     public void StartAnimTask()
     {
-        LeanTween.moveLocalX(transform.parent.gameObject, 0, 1).setEaseOutBack();
+        LeanTween.moveLocalX(transform.parent.gameObject, -150, 1).setEaseOutBack();
     }
     public void EndAnimTask()
     {
         LeanTween.moveLocalX(transform.parent.gameObject, -1500, 1).setEaseOutBack();
+        TaskManager.INS.TaskCompleted();
+        listBox.Clear();
+        finish = false;
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
@@ -27,6 +30,7 @@ public class BoxTask : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             listBox.Remove(boxActual);
             listBox.Add(boxActual);
+            boxActual.inBox = true;
         }
     }
 
@@ -39,6 +43,18 @@ public class BoxTask : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     private void Update()
     {
-        if (listBox.Count >=5 && !finish) { LeanTween.delayedCall(1, () => { EndAnimTask(); finish = true; });  }
+        if (listBox.Count >=5 && !finish) {
+            finish = true;
+            LeanTween.delayedCall(1, () => {
+            EndAnimTask(); 
+            
+            LeanTween.delayedCall(1, () => {
+                foreach (Box item in listBox)
+                {
+                    Destroy(gameObject);
+                    item.Restar();
+                }
+            });
+        });}
     }
 }

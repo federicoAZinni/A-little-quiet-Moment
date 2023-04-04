@@ -31,4 +31,4 @@ public class Tools : MonoBehaviour, IPointerClickHandler, IPointerDownHandler
         img.raycastTarget = true;
     }
 }
-public enum ToolsType { Seal,Pen }
+public enum ToolsType { Seal,Pen,Bottle }
